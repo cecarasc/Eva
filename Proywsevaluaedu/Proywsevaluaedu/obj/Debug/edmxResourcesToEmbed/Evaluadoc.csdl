@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EVALUACIONDCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="cfgPeriodoEvaluacion">
+    <Key>
+      <PropertyRef Name="cfgPEId" />
+    </Key>
+    <Property Name="cfgPEId" Type="Int32" Nullable="false" />
+    <Property Name="cPlaId" Type="Int16" Nullable="false" />
+    <Property Name="cfgPEFechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="cfgPEFechaFin" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="cOpcionCalificacion">
+    <Key>
+      <PropertyRef Name="cOpCId" />
+    </Key>
+    <Property Name="cOpCId" Type="Int16" Nullable="false" />
+    <Property Name="cOpCDescripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="cOpCValor" Type="Int16" Nullable="false" />
+  </EntityType>
+  <EntityType Name="cPregunta">
+    <Key>
+      <PropertyRef Name="cPreId" />
+    </Key>
+    <Property Name="cPreId" Type="Int16" Nullable="false" />
+    <Property Name="cPreDescripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="cSecId" Type="Int16" Nullable="false" />
+  </EntityType>
+  <EntityType Name="cSeccion">
+    <Key>
+      <PropertyRef Name="cSecId" />
+    </Key>
+    <Property Name="cSecId" Type="Int16" Nullable="false" />
+    <Property Name="cSecNombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="cSecPonderacion" Type="Int16" Nullable="false" />
+  </EntityType>
+  <EntityType Name="mEvaluacion">
+    <Key>
+      <PropertyRef Name="mEvaId" />
+    </Key>
+    <Property Name="mEvaId" Type="Int64" Nullable="false" />
+    <Property Name="mEvaFecha" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="cfgPEId" Type="Int32" Nullable="false" />
+    <Property Name="mEvaComentarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="rSeccionxOpcionCalifica">
+    <Key>
+      <PropertyRef Name="rSecxOpCId" />
+    </Key>
+    <Property Name="rSecxOpCId" Type="Int16" Nullable="false" />
+    <Property Name="cSecId" Type="Int16" Nullable="false" />
+    <Property Name="cOpcId" Type="Int16" Nullable="false" />
+  </EntityType>
+  <EntityType Name="dEvaluacion">
+    <Key>
+      <PropertyRef Name="mEvaId" />
+      <PropertyRef Name="cPreId" />
+      <PropertyRef Name="idrMxGxM" />
+      <PropertyRef Name="dEvaCalificacion" />
+    </Key>
+    <Property Name="mEvaId" Type="Int64" Nullable="false" />
+    <Property Name="cPreId" Type="Int16" Nullable="false" />
+    <Property Name="idrMxGxM" Type="Int64" Nullable="false" />
+    <Property Name="dEvaCalificacion" Type="Int16" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_cfgPeriodoEvaluacion_cPreguntas">
+    <End Role="cPreguntas" Type="EVALUACIONDCModel.cPregunta" Multiplicity="1" />
+    <End Role="cfgPeriodoEvaluacion" Type="Self.cfgPeriodoEvaluacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cPreguntas">
+        <PropertyRef Name="cPreId" />
+      </Principal>
+      <Dependent Role="cfgPeriodoEvaluacion">
+        <PropertyRef Name="cPlaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_mEvaluacion_cfgPeriodoEvaluacion">
+    <End Role="cfgPeriodoEvaluacion" Type="Self.cfgPeriodoEvaluacion" Multiplicity="1" />
+    <End Role="mEvaluacion" Type="Self.mEvaluacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cfgPeriodoEvaluacion">
+        <PropertyRef Name="cfgPEId" />
+      </Principal>
+      <Dependent Role="mEvaluacion">
+        <PropertyRef Name="cfgPEId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_rSeccionxOpcionesCalifica_cOpcionesCalificacion">
+    <End Role="cOpcionesCalificacion" Type="EVALUACIONDCModel.cOpcionCalificacion" Multiplicity="1" />
+    <End Role="rSeccionxOpcionesCalifica" Type="EVALUACIONDCModel.rSeccionxOpcionCalifica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cOpcionesCalificacion">
+        <PropertyRef Name="cOpCId" />
+      </Principal>
+      <Dependent Role="rSeccionxOpcionesCalifica">
+        <PropertyRef Name="cOpcId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_cPreguntas_cSecciones">
+    <End Role="cSecciones" Type="EVALUACIONDCModel.cSeccion" Multiplicity="1" />
+    <End Role="cPreguntas" Type="EVALUACIONDCModel.cPregunta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cSecciones">
+        <PropertyRef Name="cSecId" />
+      </Principal>
+      <Dependent Role="cPreguntas">
+        <PropertyRef Name="cSecId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dEvaluacion_cPreguntas">
+    <End Role="cPreguntas" Type="EVALUACIONDCModel.cPregunta" Multiplicity="1" />
+    <End Role="dEvaluacion" Type="Self.dEvaluacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cPreguntas">
+        <PropertyRef Name="cPreId" />
+      </Principal>
+      <Dependent Role="dEvaluacion">
+        <PropertyRef Name="cPreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_rSeccionxOpcionesCalifica_cSecciones">
+    <End Role="cSecciones" Type="EVALUACIONDCModel.cSeccion" Multiplicity="1" />
+    <End Role="rSeccionxOpcionesCalifica" Type="EVALUACIONDCModel.rSeccionxOpcionCalifica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cSecciones">
+        <PropertyRef Name="cSecId" />
+      </Principal>
+      <Dependent Role="rSeccionxOpcionesCalifica">
+        <PropertyRef Name="cSecId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dEvaluacion_mEvaluacion">
+    <End Role="mEvaluacion" Type="Self.mEvaluacion" Multiplicity="1" />
+    <End Role="dEvaluacion" Type="Self.dEvaluacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="mEvaluacion">
+        <PropertyRef Name="mEvaId" />
+      </Principal>
+      <Dependent Role="dEvaluacion">
+        <PropertyRef Name="mEvaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EVALUACIONDCEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="cfgPeriodoEvaluacion" EntityType="Self.cfgPeriodoEvaluacion" />
+    <EntitySet Name="cOpcionesCalificacion" EntityType="EVALUACIONDCModel.cOpcionCalificacion" />
+    <EntitySet Name="cPreguntas" EntityType="EVALUACIONDCModel.cPregunta" />
+    <EntitySet Name="cSecciones" EntityType="EVALUACIONDCModel.cSeccion" />
+    <EntitySet Name="mEvaluacion" EntityType="Self.mEvaluacion" />
+    <EntitySet Name="rSeccionxOpcionesCalifica" EntityType="EVALUACIONDCModel.rSeccionxOpcionCalifica" />
+    <EntitySet Name="dEvaluacion" EntityType="Self.dEvaluacion" />
+    <AssociationSet Name="FK_cfgPeriodoEvaluacion_cPreguntas" Association="Self.FK_cfgPeriodoEvaluacion_cPreguntas">
+      <End Role="cPreguntas" EntitySet="cPreguntas" />
+      <End Role="cfgPeriodoEvaluacion" EntitySet="cfgPeriodoEvaluacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_mEvaluacion_cfgPeriodoEvaluacion" Association="Self.FK_mEvaluacion_cfgPeriodoEvaluacion">
+      <End Role="cfgPeriodoEvaluacion" EntitySet="cfgPeriodoEvaluacion" />
+      <End Role="mEvaluacion" EntitySet="mEvaluacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_rSeccionxOpcionesCalifica_cOpcionesCalificacion" Association="Self.FK_rSeccionxOpcionesCalifica_cOpcionesCalificacion">
+      <End Role="cOpcionesCalificacion" EntitySet="cOpcionesCalificacion" />
+      <End Role="rSeccionxOpcionesCalifica" EntitySet="rSeccionxOpcionesCalifica" />
+    </AssociationSet>
+    <AssociationSet Name="FK_cPreguntas_cSecciones" Association="Self.FK_cPreguntas_cSecciones">
+      <End Role="cSecciones" EntitySet="cSecciones" />
+      <End Role="cPreguntas" EntitySet="cPreguntas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dEvaluacion_cPreguntas" Association="Self.FK_dEvaluacion_cPreguntas">
+      <End Role="cPreguntas" EntitySet="cPreguntas" />
+      <End Role="dEvaluacion" EntitySet="dEvaluacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_rSeccionxOpcionesCalifica_cSecciones" Association="Self.FK_rSeccionxOpcionesCalifica_cSecciones">
+      <End Role="cSecciones" EntitySet="cSecciones" />
+      <End Role="rSeccionxOpcionesCalifica" EntitySet="rSeccionxOpcionesCalifica" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dEvaluacion_mEvaluacion" Association="Self.FK_dEvaluacion_mEvaluacion">
+      <End Role="mEvaluacion" EntitySet="mEvaluacion" />
+      <End Role="dEvaluacion" EntitySet="dEvaluacion" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

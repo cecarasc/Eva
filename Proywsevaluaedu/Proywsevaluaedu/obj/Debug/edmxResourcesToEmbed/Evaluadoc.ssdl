@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EVALUACIONDCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="cfgPeriodoEvaluacion">
+    <Key>
+      <PropertyRef Name="cfgPEId" />
+    </Key>
+    <Property Name="cfgPEId" Type="int" Nullable="false" />
+    <Property Name="cPlaId" Type="smallint" Nullable="false" />
+    <Property Name="cfgPEFechaInicio" Type="datetime" Nullable="false" />
+    <Property Name="cfgPEFechaFin" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="cOpcionesCalificacion">
+    <Key>
+      <PropertyRef Name="cOpCId" />
+    </Key>
+    <Property Name="cOpCId" Type="smallint" Nullable="false" />
+    <Property Name="cOpCDescripcion" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="cOpCValor" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="cPreguntas">
+    <Key>
+      <PropertyRef Name="cPreId" />
+    </Key>
+    <Property Name="cPreId" Type="smallint" Nullable="false" />
+    <Property Name="cPreDescripcion" Type="varchar(max)" Nullable="false" />
+    <Property Name="cSecId" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="cSecciones">
+    <Key>
+      <PropertyRef Name="cSecId" />
+    </Key>
+    <Property Name="cSecId" Type="smallint" Nullable="false" />
+    <Property Name="cSecNombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="cSecPonderacion" Type="smallint" Nullable="false" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'EVALUACIONDC.dbo.dComentarios' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="dComentarios">
+          <Property Name="mEvaId" Type="bigint" />
+          <Property Name="idrMxGxM" Type="bigint" />
+          <Property Name="dComComentario" Type="varchar(max)" />
+        </EntityType>-->
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'EVALUACIONDC.dbo.dEvaluacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="dEvaluacion">
+    <Key>
+      <PropertyRef Name="mEvaId" />
+      <PropertyRef Name="cPreId" />
+      <PropertyRef Name="idrMxGxM" />
+      <PropertyRef Name="dEvaCalificacion" />
+    </Key>
+    <Property Name="mEvaId" Type="bigint" Nullable="false" />
+    <Property Name="cPreId" Type="smallint" Nullable="false" />
+    <Property Name="idrMxGxM" Type="bigint" Nullable="false" />
+    <Property Name="dEvaCalificacion" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="mEvaluacion">
+    <Key>
+      <PropertyRef Name="mEvaId" />
+    </Key>
+    <Property Name="mEvaId" Type="bigint" Nullable="false" />
+    <Property Name="mEvaFecha" Type="smalldatetime" Nullable="false" />
+    <Property Name="cfgPEId" Type="int" Nullable="false" />
+    <Property Name="mEvaComentarios" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="rSeccionxOpcionesCalifica">
+    <Key>
+      <PropertyRef Name="rSecxOpCId" />
+    </Key>
+    <Property Name="rSecxOpCId" Type="smallint" Nullable="false" />
+    <Property Name="cSecId" Type="smallint" Nullable="false" />
+    <Property Name="cOpcId" Type="smallint" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_cfgPeriodoEvaluacion_cPreguntas">
+    <End Role="cPreguntas" Type="Self.cPreguntas" Multiplicity="1" />
+    <End Role="cfgPeriodoEvaluacion" Type="Self.cfgPeriodoEvaluacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cPreguntas">
+        <PropertyRef Name="cPreId" />
+      </Principal>
+      <Dependent Role="cfgPeriodoEvaluacion">
+        <PropertyRef Name="cPlaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_cPreguntas_cSecciones">
+    <End Role="cSecciones" Type="Self.cSecciones" Multiplicity="1" />
+    <End Role="cPreguntas" Type="Self.cPreguntas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cSecciones">
+        <PropertyRef Name="cSecId" />
+      </Principal>
+      <Dependent Role="cPreguntas">
+        <PropertyRef Name="cSecId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errores durante la generación:
+error 6004: Una relación hace referencia a la tabla 'EVALUACIONDC.dbo.dComentarios', pero no se encuentra la tabla.
+        <Association Name="FK_dComentarios_mEvaluacion" />-->
+  <Association Name="FK_dEvaluacion_cPreguntas">
+    <End Role="cPreguntas" Type="Self.cPreguntas" Multiplicity="1" />
+    <End Role="dEvaluacion" Type="Self.dEvaluacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cPreguntas">
+        <PropertyRef Name="cPreId" />
+      </Principal>
+      <Dependent Role="dEvaluacion">
+        <PropertyRef Name="cPreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dEvaluacion_mEvaluacion">
+    <End Role="mEvaluacion" Type="Self.mEvaluacion" Multiplicity="1" />
+    <End Role="dEvaluacion" Type="Self.dEvaluacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="mEvaluacion">
+        <PropertyRef Name="mEvaId" />
+      </Principal>
+      <Dependent Role="dEvaluacion">
+        <PropertyRef Name="mEvaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_mEvaluacion_cfgPeriodoEvaluacion">
+    <End Role="cfgPeriodoEvaluacion" Type="Self.cfgPeriodoEvaluacion" Multiplicity="1" />
+    <End Role="mEvaluacion" Type="Self.mEvaluacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cfgPeriodoEvaluacion">
+        <PropertyRef Name="cfgPEId" />
+      </Principal>
+      <Dependent Role="mEvaluacion">
+        <PropertyRef Name="cfgPEId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_rSeccionxOpcionesCalifica_cOpcionesCalificacion">
+    <End Role="cOpcionesCalificacion" Type="Self.cOpcionesCalificacion" Multiplicity="1" />
+    <End Role="rSeccionxOpcionesCalifica" Type="Self.rSeccionxOpcionesCalifica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cOpcionesCalificacion">
+        <PropertyRef Name="cOpCId" />
+      </Principal>
+      <Dependent Role="rSeccionxOpcionesCalifica">
+        <PropertyRef Name="cOpcId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_rSeccionxOpcionesCalifica_cSecciones">
+    <End Role="cSecciones" Type="Self.cSecciones" Multiplicity="1" />
+    <End Role="rSeccionxOpcionesCalifica" Type="Self.rSeccionxOpcionesCalifica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cSecciones">
+        <PropertyRef Name="cSecId" />
+      </Principal>
+      <Dependent Role="rSeccionxOpcionesCalifica">
+        <PropertyRef Name="cSecId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EVALUACIONDCModelStoreContainer">
+    <EntitySet Name="cfgPeriodoEvaluacion" EntityType="Self.cfgPeriodoEvaluacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="cOpcionesCalificacion" EntityType="Self.cOpcionesCalificacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="cPreguntas" EntityType="Self.cPreguntas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="cSecciones" EntityType="Self.cSecciones" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="mEvaluacion" EntityType="Self.mEvaluacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="rSeccionxOpcionesCalifica" EntityType="Self.rSeccionxOpcionesCalifica" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="dEvaluacion" EntityType="Self.dEvaluacion" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [dEvaluacion].[mEvaId] AS [mEvaId], 
+    [dEvaluacion].[cPreId] AS [cPreId], 
+    [dEvaluacion].[idrMxGxM] AS [idrMxGxM], 
+    [dEvaluacion].[dEvaCalificacion] AS [dEvaCalificacion]
+    FROM [dbo].[dEvaluacion] AS [dEvaluacion]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_cfgPeriodoEvaluacion_cPreguntas" Association="Self.FK_cfgPeriodoEvaluacion_cPreguntas">
+      <End Role="cPreguntas" EntitySet="cPreguntas" />
+      <End Role="cfgPeriodoEvaluacion" EntitySet="cfgPeriodoEvaluacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_cPreguntas_cSecciones" Association="Self.FK_cPreguntas_cSecciones">
+      <End Role="cSecciones" EntitySet="cSecciones" />
+      <End Role="cPreguntas" EntitySet="cPreguntas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dEvaluacion_cPreguntas" Association="Self.FK_dEvaluacion_cPreguntas">
+      <End Role="cPreguntas" EntitySet="cPreguntas" />
+      <End Role="dEvaluacion" EntitySet="dEvaluacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dEvaluacion_mEvaluacion" Association="Self.FK_dEvaluacion_mEvaluacion">
+      <End Role="mEvaluacion" EntitySet="mEvaluacion" />
+      <End Role="dEvaluacion" EntitySet="dEvaluacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_mEvaluacion_cfgPeriodoEvaluacion" Association="Self.FK_mEvaluacion_cfgPeriodoEvaluacion">
+      <End Role="cfgPeriodoEvaluacion" EntitySet="cfgPeriodoEvaluacion" />
+      <End Role="mEvaluacion" EntitySet="mEvaluacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_rSeccionxOpcionesCalifica_cOpcionesCalificacion" Association="Self.FK_rSeccionxOpcionesCalifica_cOpcionesCalificacion">
+      <End Role="cOpcionesCalificacion" EntitySet="cOpcionesCalificacion" />
+      <End Role="rSeccionxOpcionesCalifica" EntitySet="rSeccionxOpcionesCalifica" />
+    </AssociationSet>
+    <AssociationSet Name="FK_rSeccionxOpcionesCalifica_cSecciones" Association="Self.FK_rSeccionxOpcionesCalifica_cSecciones">
+      <End Role="cSecciones" EntitySet="cSecciones" />
+      <End Role="rSeccionxOpcionesCalifica" EntitySet="rSeccionxOpcionesCalifica" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

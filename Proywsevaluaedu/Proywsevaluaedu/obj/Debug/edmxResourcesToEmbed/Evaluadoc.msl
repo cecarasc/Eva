@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EVALUACIONDCModelStoreContainer" CdmEntityContainer="EVALUACIONDCEntities">
+    <EntitySetMapping Name="cfgPeriodoEvaluacion">
+      <EntityTypeMapping TypeName="EVALUACIONDCModel.cfgPeriodoEvaluacion">
+        <MappingFragment StoreEntitySet="cfgPeriodoEvaluacion">
+          <ScalarProperty Name="cfgPEId" ColumnName="cfgPEId" />
+          <ScalarProperty Name="cPlaId" ColumnName="cPlaId" />
+          <ScalarProperty Name="cfgPEFechaInicio" ColumnName="cfgPEFechaInicio" />
+          <ScalarProperty Name="cfgPEFechaFin" ColumnName="cfgPEFechaFin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cOpcionesCalificacion">
+      <EntityTypeMapping TypeName="EVALUACIONDCModel.cOpcionCalificacion">
+        <MappingFragment StoreEntitySet="cOpcionesCalificacion">
+          <ScalarProperty Name="cOpCId" ColumnName="cOpCId" />
+          <ScalarProperty Name="cOpCDescripcion" ColumnName="cOpCDescripcion" />
+          <ScalarProperty Name="cOpCValor" ColumnName="cOpCValor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cPreguntas">
+      <EntityTypeMapping TypeName="EVALUACIONDCModel.cPregunta">
+        <MappingFragment StoreEntitySet="cPreguntas">
+          <ScalarProperty Name="cPreId" ColumnName="cPreId" />
+          <ScalarProperty Name="cPreDescripcion" ColumnName="cPreDescripcion" />
+          <ScalarProperty Name="cSecId" ColumnName="cSecId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cSecciones">
+      <EntityTypeMapping TypeName="EVALUACIONDCModel.cSeccion">
+        <MappingFragment StoreEntitySet="cSecciones">
+          <ScalarProperty Name="cSecId" ColumnName="cSecId" />
+          <ScalarProperty Name="cSecNombre" ColumnName="cSecNombre" />
+          <ScalarProperty Name="cSecPonderacion" ColumnName="cSecPonderacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="mEvaluacion">
+      <EntityTypeMapping TypeName="EVALUACIONDCModel.mEvaluacion">
+        <MappingFragment StoreEntitySet="mEvaluacion">
+          <ScalarProperty Name="mEvaId" ColumnName="mEvaId" />
+          <ScalarProperty Name="mEvaFecha" ColumnName="mEvaFecha" />
+          <ScalarProperty Name="cfgPEId" ColumnName="cfgPEId" />
+          <ScalarProperty Name="mEvaComentarios" ColumnName="mEvaComentarios" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rSeccionxOpcionesCalifica">
+      <EntityTypeMapping TypeName="EVALUACIONDCModel.rSeccionxOpcionCalifica">
+        <MappingFragment StoreEntitySet="rSeccionxOpcionesCalifica">
+          <ScalarProperty Name="rSecxOpCId" ColumnName="rSecxOpCId" />
+          <ScalarProperty Name="cSecId" ColumnName="cSecId" />
+          <ScalarProperty Name="cOpcId" ColumnName="cOpcId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="dEvaluacion">
+      <EntityTypeMapping TypeName="EVALUACIONDCModel.dEvaluacion">
+        <MappingFragment StoreEntitySet="dEvaluacion">
+          <ScalarProperty Name="mEvaId" ColumnName="mEvaId" />
+          <ScalarProperty Name="cPreId" ColumnName="cPreId" />
+          <ScalarProperty Name="idrMxGxM" ColumnName="idrMxGxM" />
+          <ScalarProperty Name="dEvaCalificacion" ColumnName="dEvaCalificacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

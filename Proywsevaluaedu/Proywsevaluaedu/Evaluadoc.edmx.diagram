@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="435920f7d4bd4d2f94306db10f12ffdd" Name="Diagram1">
+        <EntityTypeShape EntityType="EVALUACIONDCModel.cfgPeriodoEvaluacion" Width="1.5" PointX="5.125" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVALUACIONDCModel.cOpcionCalificacion" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVALUACIONDCModel.cPregunta" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVALUACIONDCModel.cSeccion" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVALUACIONDCModel.mEvaluacion" Width="1.5" PointX="7.5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVALUACIONDCModel.rSeccionxOpcionCalifica" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EVALUACIONDCModel.dEvaluacion" Width="1.5" PointX="9.75" PointY="3.625" IsExpanded="true" />
+        <AssociationConnector Association="EVALUACIONDCModel.FK_cfgPeriodoEvaluacion_cPreguntas" ManuallyRouted="false" />
+        <AssociationConnector Association="EVALUACIONDCModel.FK_mEvaluacion_cfgPeriodoEvaluacion" ManuallyRouted="false" />
+        <AssociationConnector Association="EVALUACIONDCModel.FK_rSeccionxOpcionesCalifica_cOpcionesCalificacion" ManuallyRouted="false" />
+        <AssociationConnector Association="EVALUACIONDCModel.FK_cPreguntas_cSecciones" ManuallyRouted="false" />
+        <AssociationConnector Association="EVALUACIONDCModel.FK_dEvaluacion_cPreguntas" ManuallyRouted="false" />
+        <AssociationConnector Association="EVALUACIONDCModel.FK_rSeccionxOpcionesCalifica_cSecciones" ManuallyRouted="false" />
+        <AssociationConnector Association="EVALUACIONDCModel.FK_dEvaluacion_mEvaluacion" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
