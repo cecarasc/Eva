@@ -1,0 +1,2 @@
+C:\Users\ivan_\AppData\Local\Temporary Projects\SCED\bin\Debug\SCED.exe.config
+C:\Users\ivan_\Documents\GitHub\Eva\SCED\SCED\SCED\bin\Debug\SCED.exe.config
